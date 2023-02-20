@@ -16,7 +16,15 @@ class Database
         $sth = $this->conn->prepare($query);
         $sth->execute($params);
     
-        return $sth->fetch(\PDO::FETCH_OBJ);
+        $result = $sth->fetch(\PDO::FETCH_OBJ);
+
+        // return null instead of false if no row
+        if ($result === false)
+        {
+            return null;
+        }
+
+        return $result;
     }
 
     public function getAll(string $query, ...$params)

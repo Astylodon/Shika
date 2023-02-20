@@ -18,4 +18,7 @@ $app = AppFactory::create();
 $routes = require __DIR__ . "/../routes/routes.php";
 $routes($app);
 
+$api = require __DIR__ . "/../routes/api.php";
+$api($app);
+
 $app->run();
