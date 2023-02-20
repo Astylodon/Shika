@@ -2,14 +2,17 @@
 
 namespace Shika\Controllers;
 
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Shika\Database\Database;
 
 class AnalyticsController
 {
-    public function __construct(ContainerInterface $container)
+    private Database $database;
+
+    public function __construct(Database $database)
     {
+        $this->database = $database;
     }
 
     public function send(Request $request, Response $response)
