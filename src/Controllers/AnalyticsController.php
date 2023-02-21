@@ -4,15 +4,15 @@ namespace Shika\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Shika\Database\Database;
+use Shika\Repositories\VisitRepository;
 
 class AnalyticsController
 {
-    private Database $database;
+    private VisitRepository $visits;
 
-    public function __construct(Database $database)
+    public function __construct(VisitRepository $visits)
     {
-        $this->database = $database;
+        $this->visits = $visits;
     }
 
     public function send(Request $request, Response $response)
