@@ -1,7 +1,9 @@
-const url = document.currentScript.getAttribute("url");
-if (url === null) {
-    console.error("URL is not set");
-} else {
+function shika_send() {
+    const url = document.currentScript.getAttribute("url");
+    if (url === null) {
+        console.error("URL is not set");
+        return;
+    }
     const id = document.currentScript.getAttribute("id") ?? "0";
     const body = {
         lang: navigator.language,
@@ -15,3 +17,6 @@ if (url === null) {
     const blob = new Blob([JSON.stringify(body)], headers);
     navigator.sendBeacon(url, blob);
 }
+
+addEventListener('hashchange', shika_send);
+shika_send();
