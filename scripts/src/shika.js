@@ -18,5 +18,4 @@ function shika_send() {
     navigator.sendBeacon(url, blob);
 }
 
-addEventListener('hashchange', shika_send);
 shika_send();
