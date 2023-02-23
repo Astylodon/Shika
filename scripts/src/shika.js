@@ -9,7 +9,7 @@ function shika_send() {
         lang: navigator.language,
         referrer: document.referrer,
         href: location.href,
-        id: id
+        siteKey: id
     };
     const headers = {
         type: 'application/json',
