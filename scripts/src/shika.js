@@ -1,15 +1,15 @@
 function shika_send() {
-    const url = document.currentScript.getAttribute("url");
+    const url = document.currentScript.getAttribute("data-url");
     if (url === null) {
         console.error("URL is not set");
         return;
     }
-    const id = document.currentScript.getAttribute("id") ?? "0";
+    const siteKey = document.currentScript.getAttribute("data-siteKey") ?? "0";
     const body = {
         lang: navigator.language,
         referrer: document.referrer,
         href: location.href,
-        siteKey: id
+        siteKey: siteKey
     };
     const headers = {
         type: 'application/json',

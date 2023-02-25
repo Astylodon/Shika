@@ -1,4 +1,4 @@
 vendor/
 *.sqlite*
-scripts/node_modules/
+node_modules/
 public/shika.js
