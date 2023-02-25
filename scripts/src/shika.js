@@ -1,15 +1,17 @@
 function shika_send() {
-    const url = document.currentScript.getAttribute("data-url");
-    if (url === null) {
-        console.error("URL is not set");
+    const url = document.currentScript.dataset.url;
+    const siteKey = document.currentScript.dataset.siteKey; // data-site-key
+
+    if (!url || !siteKey) {
+        console.error("The Shika script tag is missing a data-url or data-site-key attribute, make sure you copied the full code for your site.");
         return;
     }
-    const siteKey = document.currentScript.getAttribute("data-siteKey") ?? "0";
+
     const body = {
         lang: navigator.language,
         referrer: document.referrer,
         href: location.href,
-        siteKey: siteKey
+        siteKey
     };
     const headers = {
         type: 'application/json',
