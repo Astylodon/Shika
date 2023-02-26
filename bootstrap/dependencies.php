@@ -6,6 +6,7 @@ use Shika\Repositories\ApiKeyRepository;
 use Shika\Repositories\SiteRepository;
 use Shika\Repositories\UserRepository;
 use Shika\Repositories\VisitRepository;
+use Shika\View\Twig;
 
 use function DI\autowire;
 use function DI\env;
@@ -20,6 +21,8 @@ return function (ContainerBuilder $container) {
             UserRepository::class => autowire(UserRepository::class),
             VisitRepository::class => autowire(VisitRepository::class),
             SiteRepository::class => autowire(SiteRepository::class),
+
+            Twig::class => autowire(Twig::class),
         ]
     );
 };
