@@ -12,4 +12,14 @@ class UserRepository
     {
         $this->database = $database;
     }
+
+    public function findById(int $id)
+    {
+        return $this->database->get("SELECT * FROM `users` WHERE `id` = ?", $id);
+    }
+
+    public function findByName(string $username)
+    {
+        return $this->database->get("SELECT * FROM `users` WHERE `username` = ?", $username);
+    }
 }
