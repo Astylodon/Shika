@@ -1,6 +1,6 @@
 <?php
 
-namespace Shika\View;
+namespace Shika\Helpers;
 
 use Psr\Http\Message\ResponseInterface;
 use Twig\Environment;

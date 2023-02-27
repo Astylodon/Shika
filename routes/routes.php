@@ -2,6 +2,7 @@
 
 use Shika\Controllers\AnalyticsController;
 use Shika\Controllers\LoginController;
+use Shika\Middleware\AuthMiddleware;
 use Slim\App;
 
 return function (App $app) {

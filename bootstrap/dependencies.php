@@ -2,11 +2,12 @@
 
 use DI\ContainerBuilder;
 use Shika\Database\Database;
+use Shika\Helpers\Session;
 use Shika\Repositories\ApiKeyRepository;
 use Shika\Repositories\SiteRepository;
 use Shika\Repositories\UserRepository;
 use Shika\Repositories\VisitRepository;
-use Shika\View\Twig;
+use Shika\Helpers\Twig;
 
 use function DI\autowire;
 use function DI\env;
@@ -23,6 +24,7 @@ return function (ContainerBuilder $container) {
             SiteRepository::class => autowire(SiteRepository::class),
 
             Twig::class => autowire(Twig::class),
+            Session::class => autowire(Session::class),
         ]
     );
 };
