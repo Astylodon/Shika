@@ -1,6 +1,7 @@
 <?php
 
 use Shika\Controllers\AnalyticsController;
+use Shika\Controllers\HomeController;
 use Shika\Controllers\LoginController;
 use Shika\Middleware\AuthMiddleware;
 use Slim\App;
@@ -10,4 +11,6 @@ return function (App $app) {
 
     $app->get("/login", [LoginController::class, "show"]);
     $app->post("/login", [LoginController::class, "login"]);
+
+    $app->get("/", [HomeController::class, "index"])->add(AuthMiddleware::class);
 };
