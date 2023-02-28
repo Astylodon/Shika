@@ -13,7 +13,8 @@ class VisitRepository
         $this->database = $database;
     }
 
-    public function addVisit()
+    public function addVisit(array $visit)
     {
+        $this->database->insert("visits", $visit);
     }
 }

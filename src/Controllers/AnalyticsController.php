@@ -48,6 +48,35 @@ class AnalyticsController
         $location = parse_url($data->href);
         $referrer = parse_url($data->referrer);
 
-        return $response->withStatus(204);
+        // validate the href
+        if ($location === false || !isset($location["host"]) || !isset($location["path"]))
+        {
+            return $this->json($response, [ "error" => "Invalid href" ])->withStatus(400);
+        }
+
+        // build the visit
+        $visit = [
+            "site_id" => $site->id,
+            "visit_at" => gmdate("Y-m-d H:i:s"),
+
+            "visit_host" => $location["host"],
+            "visit_path" => $location["path"],
+        ];
+
+        // add the referrer if we have one
+        if ($referrer !== false && isset($referrer["host"]))
+        {
+            $visit["referrer_host"] = $referrer["host"];
+
+            if (isset($referrer["path"]) && $referrer["path"] != "/")
+            {
+                $visit["referrer_path"] = $referrer["path"];
+            }
+        }
+
+        // insert the visit
+        $this->visits->addVisit($visit);
+
+        return $response->withStatus(200);
     }
 }
