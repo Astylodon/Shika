@@ -7,6 +7,9 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Shika\Repositories\ApiKeyRepository;
 use Slim\Psr7\Response;
 
+/**
+ * Validates for a valid API key before a request
+ */
 class ApiMiddleware
 { 
     private ApiKeyRepository $keys;

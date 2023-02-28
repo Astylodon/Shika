@@ -13,16 +13,32 @@ class Session
         session_start();
     }
 
+    /**
+     * Gets a key from the session
+     * 
+     * @param string $key The key
+     */
     public function get(string $key)
     {
         return $_SESSION[$key];
     }
 
-    public function set(string $key, string $value)
+    /**
+     * Sets a key on the session
+     * 
+     * @param string $key The key to set
+     * @param mixed $value The value to set
+     */
+    public function set(string $key, mixed $value)
     {
         $_SESSION[$key] = $value;
     }
 
+    /**
+     * Gets whether the session has a key set
+     * 
+     * @param string $key The key
+     */
     public function has(string $key)
     {
         return isset($_SESSION[$key]);

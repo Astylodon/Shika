@@ -7,6 +7,9 @@ use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Shika\Helpers\Session;
 use Slim\Psr7\Response;
 
+/**
+ * Validates for a valid user session before a request, or else redirects to the login page
+ */
 class AuthMiddleware
 {
     private Session $session;
