@@ -3,7 +3,8 @@
         "slim/slim": "^4.11",
         "slim/psr7": "^1.6",
         "php-di/php-di": "^7.0",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "maxmind-db/reader": "^1.11"
     },
     "autoload": {
         "psr-4": {
