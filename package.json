@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "build": "esbuild scripts/src/shika.js --minify --outfile=./public/shika.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.17.10"
+  }
+}

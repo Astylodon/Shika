@@ -1,3 +1,5 @@
 vendor/
 *.sqlite*
 *.mmdb
+node_modules/
+public/shika.js
