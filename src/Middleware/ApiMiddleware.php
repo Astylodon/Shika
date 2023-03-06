@@ -4,6 +4,7 @@ namespace Shika\Middleware;
 
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Shika\Helpers\Session;
 use Shika\Repositories\ApiKeyRepository;
 use Slim\Psr7\Response;
 
@@ -23,13 +24,17 @@ class ApiMiddleware
     {
         $key = $request->getHeader("X-Api-Key");
 
-        if (count($key) < 1 || !$this->keys->findByKey($key[0]))
+        if (count($key) > 0 && $this->keys->findByKey($key[0]))
         {
-            $response = new Response();
-
-            return $response->withStatus(401);
+            return $handler->handle($request);
         }
 
-        return $handler->handle($request);
+        // also allow access to API with a valid session
+        if ((new Session)->has("user.id"))
+        {
+            return $handler->handle($request);
+        }
+
+        return (new Response)->withStatus(401);
     }
 }
