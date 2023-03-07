@@ -49,8 +49,7 @@ class SiteController
         }
 
         $from = $this->getFromTime($request);
-
-        // TODO allow to filter on time
+        
         return $this->json($response, $this->visits->getReferrers($from, $site->id));
     }
 
@@ -65,7 +64,6 @@ class SiteController
 
         $from = $this->getFromTime($request);
 
-        // TODO allow to filter on time
         return $this->json($response, $this->visits->getPages($from, $site->id));
     }
 
