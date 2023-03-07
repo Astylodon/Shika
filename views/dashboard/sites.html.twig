@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Sites{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Label</th>
+            <th>Site key</th>
+        </tr>
+
+        {% for site in sites %}
+            <tr>
+                <td>{{ site.id }}</td>
+                <td>{{ site.name }}</td>
+                <td>{{ site.site_key }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
