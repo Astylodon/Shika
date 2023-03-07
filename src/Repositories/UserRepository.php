@@ -22,4 +22,9 @@ class UserRepository
     {
         return $this->database->get("SELECT * FROM `users` WHERE `username` = ?", $username);
     }
+
+    public function getUsers()
+    {
+        return $this->database->getAll("SELECT * FROM `users`");
+    }
 }
