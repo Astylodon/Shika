@@ -48,8 +48,10 @@ class SiteController
             throw new HttpNotFoundException($request);
         }
 
+        $from = $this->getFromTime($request);
+
         // TODO allow to filter on time
-        return $this->json($response, $this->visits->getReferrers($site->id));
+        return $this->json($response, $this->visits->getReferrers($from, $site->id));
     }
 
     public function pages(Request $request, Response $response, array $args)
@@ -61,7 +63,22 @@ class SiteController
             throw new HttpNotFoundException($request);
         }
 
+        $from = $this->getFromTime($request);
+
         // TODO allow to filter on time
-        return $this->json($response, $this->visits->getPages($site->id));
+        return $this->json($response, $this->visits->getPages($from, $site->id));
+    }
+
+    private function getFromTime(Request $request)
+    {
+        $params = $request->getQueryParams();
+
+        if (!isset($params["from"]) || intval($params["from"]) == 0)
+        {
+            // default to last 7 days
+            return time() - 604800;
+        }
+
+        return intval($params["from"]);
     }
 }

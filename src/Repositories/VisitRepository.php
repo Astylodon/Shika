@@ -18,7 +18,7 @@ class VisitRepository
         $this->database->insert("visits", $visit);
     }
 
-    public function getReferrers(int $site = 0)
+    public function getReferrers(int $from = 0, int $site = 0)
     {
         $query = "SELECT `referrer_host` AS `referrer`, count(*) as `count` FROM `visits` WHERE `referrer_host` IS NOT NULL";
         $params = [];
@@ -26,8 +26,13 @@ class VisitRepository
         if ($site > 0)
         {
             $query .= " AND `site_id` = ?";
-            
             array_push($params, $site);
+        }
+
+        if ($from > 0)
+        {
+            $query .= " AND `visit_at` > ?";
+            array_push($params, gmdate("Y-m-d H:i:s", $from));
         }
 
         $query .= " GROUP BY `referrer_host` ORDER BY `count` DESC";
@@ -35,7 +40,7 @@ class VisitRepository
         return $this->database->getAll($query, ...$params);
     }
 
-    public function getPages(int $site = 0)
+    public function getPages(int $from = 0, int $site = 0)
     {
         $query = "SELECT `visit_path` AS `path`, count(*) as `count` FROM `visits` WHERE `visit_path` IS NOT NULL";
         $params = [];
@@ -43,8 +48,13 @@ class VisitRepository
         if ($site > 0)
         {
             $query .= " AND `site_id` = ?";
-            
             array_push($params, $site);
+        }
+
+        if ($from > 0)
+        {
+            $query .= " AND `visit_at` > ?";
+            array_push($params, gmdate("Y-m-d H:i:s", $from));
         }
 
         $query .= " GROUP BY `visit_path` ORDER BY `count` DESC";
