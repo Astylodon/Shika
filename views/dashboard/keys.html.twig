@@ -3,5 +3,23 @@
 {% block title %}API keys{% endblock %}
 
 {% block content %}
+    <p>The Shika application programming interface (API) can be used to fetch information from Shika with your own code. To start generate an API key below.</p>
 
+    <table>
+        <tr>
+            <th>Label</th>
+            <th>Key</th>
+            <th>Created by</th>
+            <th>Created</th>
+        </tr>
+
+        {% for key in keys %}
+            <tr>
+                <td>{{ key.label }}</td>
+                <td>{{ key.key }}</td>
+                <td>{{ key.username }}</td>
+                <td>{{ key.created_at|date("d/m/Y H:m") }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
