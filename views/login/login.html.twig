@@ -2,6 +2,10 @@
 
 {% block title %}Login{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+{% endblock %}
+
 {% block content %}
     {% if error is defined %}
         <div class="alert">{{ error }}</div>
