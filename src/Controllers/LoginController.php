@@ -43,7 +43,7 @@ class LoginController
 
         if ($user === null || !password_verify($password, $user->password))
         {
-            return $this->twig->render($response, "login/login.html.twig", ["error" => "The username or password is incorrect"]);
+            return $this->twig->render($response, "login/login.html.twig", ["error" => "The username or password is incorrect", "username" => $username]);
         }
 
         $this->session->set("user.id", $user->id);
