@@ -1,35 +1,29 @@
 async function displayData(site) {
-    let referrers = {};
+    let referrers = (await fetch(`/api/sites/${site.id}/referrers`).then(r => r.json()))
+        .map(x => [x.referrer, x.count]);
+    let paths = (await fetch(`/api/sites/${site.id}/paths`).then(r => r.json()))
+        .map(x => [x.path, x.count]);
 
-    for (const r of await fetch(`/api/sites/${site.id}/referrers`).then(r => r.json()))
-    {
-        if (r.referrer in referrers) {
-            referrers[r.referrer] += r.count;
-        } else {
-            referrers[r.referrer] = r.count;
-        }
-    }
-
-    var items = Object.keys(referrers).map(function(key) {
-        return [key, referrers[key]];
-    });
-
-    items.sort(function(first, second) {
-        return second[1] - first[1];
-    });
-
-    const ctx = document.getElementById('referrers');
-    new Chart(ctx, {
+    new Chart(document.getElementById('referrers'), {
         type: 'bar',
         data: {
-            labels: items.map(x => x[0]),
+            labels: referrers.map(x => x[0]),
             datasets: [{
                 label: "Nb. of Visits",
-                data: items.map(x => x[1])
+                data: referrers.map(x => x[1])
             }]
         }
     });
-
+    new Chart(document.getElementById('paths'), {
+        type: 'bar',
+        data: {
+            labels: paths.map(x => x[0]),
+            datasets: [{
+                label: "Nb. of Visits",
+                data: paths.map(x => x[1])
+            }]
+        }
+    });
 }
 
 addEventListener("load", async (_) => {
