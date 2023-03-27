@@ -1,24 +1,10 @@
-form {
+#graphs {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-flow: column;
-    height: 90vh;
 }
 
-form > * {
-    margin-top: .5em;
-}
-
-.alert {
-    position: absolute;
-    width: 100vw;
-    background-color: #B71C1C;
-    text-align: center;
-    top: 0;
-    left: 0;
-    color: white;
-    height: 2em;
-    padding-top: .5em;
-    font-size: 1em;
+#graphs > canvas {
+    max-width: 50vw;
+    max-height: 50vh;
 }
