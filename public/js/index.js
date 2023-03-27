@@ -1,19 +1,12 @@
-addEventListener("load", async (_) => {
-
-    const sites = await fetch("/api/sites").then(r => r.json());
-
+async function displayData(site) {
     let referrers = {};
 
-    for (const site of sites)
+    for (const r of await fetch(`/api/sites/${site.id}/referrers`).then(r => r.json()))
     {
-        for (const r of await fetch(`/api/sites/${site.id}/referrers?from=1`).then(r => r.json()))
-        {
-            console.log(r);
-            if (r.referrer in referrers) {
-                referrers[r.referrer] += r.count;
-            } else {
-                referrers[r.referrer] = r.count;
-            } 
+        if (r.referrer in referrers) {
+            referrers[r.referrer] += r.count;
+        } else {
+            referrers[r.referrer] = r.count;
         }
     }
 
@@ -36,4 +29,26 @@ addEventListener("load", async (_) => {
             }]
         }
     });
+
+}
+
+addEventListener("load", async (_) => {
+    const sites = await fetch("/api/sites").then(r => r.json());
+
+    const selection = document.getElementById("site-selection");
+    for (const site of sites)
+    {
+        const div = document.createElement("div");
+        div.innerHTML = site.name;
+        div.onclick = async (_) => {
+            for (const elem of document.querySelectorAll("#site-selection > div")) {
+                elem.classList.remove("selected");
+                div.classList.add("selected")
+                await displayData(site);
+            }
+        };
+        selection.appendChild(div);
+    }
+
+    document.querySelector("#site-selection > div")?.click();
 });

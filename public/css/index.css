@@ -1,3 +1,25 @@
+#site-selection {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+#site-selection > div {
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+    width: 50vw;
+}
+
+#site-selection > div:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+#site-selection > div.selected {
+    background-color: #acebac;
+}
+
 #graphs {
     display: flex;
     align-items: center;
