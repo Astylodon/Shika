@@ -1,7 +1,7 @@
 async function displayData(site) {
-    let referrers = (await fetch(`/api/sites/${site.id}/referrers`).then(r => r.json()))
+    let referrers = (await fetch(`/api/sites/${site.id}/referrers?from=1`).then(r => r.json()))
         .map(x => [x.referrer, x.count]);
-    let paths = (await fetch(`/api/sites/${site.id}/paths`).then(r => r.json()))
+    let pages = (await fetch(`/api/sites/${site.id}/pages?from=1`).then(r => r.json()))
         .map(x => [x.path, x.count]);
 
     new Chart(document.getElementById('referrers'), {
@@ -14,13 +14,13 @@ async function displayData(site) {
             }]
         }
     });
-    new Chart(document.getElementById('paths'), {
+    new Chart(document.getElementById('pages'), {
         type: 'bar',
         data: {
-            labels: paths.map(x => x[0]),
+            labels: pages.map(x => x[0]),
             datasets: [{
                 label: "Nb. of Visits",
-                data: paths.map(x => x[1])
+                data: pages.map(x => x[1])
             }]
         }
     });
