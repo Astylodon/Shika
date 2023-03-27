@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     flex-flow: column;
+    margin-bottom: 10em;
 }
 
 #site-selection > div {
