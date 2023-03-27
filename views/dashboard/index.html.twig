@@ -10,7 +10,12 @@
 
 {% block content %}
     <h1>Welcome, {{ username }}</h1>
-    <div id="site-selection"></div>
+    <div id="date-selection" class="selector">
+        <div data-time="86400">1 day</div>
+        <div data-time="604800">7 days</div>
+        <div data-time="2592000">30 days</div>
+    </div>
+    <div id="site-selection" class="selector"></div>
     <div id="graphs">
         <canvas id="pages"></canvas>
         <canvas id="referrers"></canvas>

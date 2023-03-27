@@ -1,10 +1,17 @@
-async function displayData(site) {
-    let referrers = (await fetch(`/api/sites/${site.id}/referrers?from=1`).then(r => r.json()))
+let referrersChart = null;
+let pagesChart = null;
+
+async function displayData(id, time) {
+    if (referrersChart !== null) referrersChart.destroy();
+    if (pagesChart !== null) pagesChart.destroy();
+
+    var epoch = (Date.now() / 1000) - time;
+    let referrers = (await fetch(`/api/sites/${id}/referrers?from=${epoch}`).then(r => r.json()))
         .map(x => [x.referrer, x.count]);
-    let pages = (await fetch(`/api/sites/${site.id}/pages?from=1`).then(r => r.json()))
+    let pages = (await fetch(`/api/sites/${id}/pages?from=${epoch}`).then(r => r.json()))
         .map(x => [x.path, x.count]);
 
-    new Chart(document.getElementById('referrers'), {
+    referrersChart = new Chart(document.getElementById('referrers'), {
         type: 'bar',
         data: {
             labels: referrers.map(x => x[0]),
@@ -14,7 +21,7 @@ async function displayData(site) {
             }]
         }
     });
-    new Chart(document.getElementById('pages'), {
+    pagesChart = new Chart(document.getElementById('pages'), {
         type: 'bar',
         data: {
             labels: pages.map(x => x[0]),
@@ -38,11 +45,22 @@ addEventListener("load", async (_) => {
             for (const elem of document.querySelectorAll("#site-selection > div")) {
                 elem.classList.remove("selected");
                 div.classList.add("selected")
-                await displayData(site);
+                await displayData(site.id, document.querySelector("#date-selection > div.selected").dataset.time);
             }
         };
+        div.dataset.id = site.id;
         selection.appendChild(div);
     }
 
+    for (const e of document.querySelectorAll("#date-selection > div")) {
+        e.onclick = async (_) => {
+            document.querySelector("#date-selection > div.selected").classList.remove("selected");
+            e.classList.add("selected");
+            epochTarget = parseInt(e.dataset.time);
+            await displayData(document.querySelector("#site-selection > div.selected").dataset.id, epochTarget);
+        };
+    }
+
+    document.querySelector("#date-selection > div").classList.add("selected");
     document.querySelector("#site-selection > div")?.click();
 });
