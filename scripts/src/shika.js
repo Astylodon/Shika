@@ -1,5 +1,5 @@
 function shika_send() {
-    const url = document.currentScript.dataset.url;
+    const url = document.currentScript.dataset.url; // data-url
     const siteKey = document.currentScript.dataset.siteKey; // data-site-key
 
     if (!url || !siteKey) {
@@ -13,11 +13,10 @@ function shika_send() {
         href: location.href,
         siteKey
     };
-    const headers = {
-        type: 'application/json',
-    };
-    const blob = new Blob([JSON.stringify(body)], headers);
+
+    const blob = new Blob([JSON.stringify(body)], {type: "application/json"});
+
     navigator.sendBeacon(url, blob);
 }
 
-shika_send();
+document.addEventListener("load", shika_send);
