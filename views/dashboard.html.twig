@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/sites">Sites</a></li>
+            <li><a href="/users">Users</a></li>
+        </ul>
+    </nav>
+
+    {% block content %}{% endblock %}
+{% endblock %}

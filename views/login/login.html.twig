@@ -3,10 +3,10 @@
 {% block title %}Login{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="css/login.css" />
+    <link rel="stylesheet" type="text/css" href="css/login.css" />
 {% endblock %}
 
-{% block content %}
+{% block body %}
     {% if error is defined %}
         <div class="alert">{{ error }}</div>
     {% endif %}
