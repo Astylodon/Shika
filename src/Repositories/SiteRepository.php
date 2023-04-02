@@ -27,4 +27,9 @@ class SiteRepository
     {
         return $this->database->getAll("SELECT * FROM `sites`");
     }
+
+    public function addSite(string $name, string $key)
+    {
+        $this->database->insert("sites", [ "name" => $name, "site_key" => $key ]);
+    }
 }

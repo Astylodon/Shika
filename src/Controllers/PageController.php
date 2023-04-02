@@ -48,4 +48,27 @@ class PageController
     {
         return $this->twig->render($response, "dashboard/keys.html.twig", [ "keys" => $this->keys->getKeys() ]);
     }
+
+    // TODO this should likely be in SiteController.php but then we're going to mix API and dashboard
+    public function addsite(Request $request, Response $response)
+    {
+        $body = $request->getParsedBody();
+
+        if ($body === null || !isset($body["name"]))
+        {
+            return $this->twig->render($response, "dashboard/sites.html.twig", [ "sites" => $this->sites->getSites() ]);
+        }
+
+        // generate a site key
+        do
+        {
+            $key = bin2hex(random_bytes(12));
+        }
+        while ($this->sites->findByKey($key) !== null);
+
+        // add the site
+        $this->sites->addSite($body["name"], $key);
+        
+        return $this->twig->render($response, "dashboard/sites.html.twig", [ "sites" => $this->sites->getSites() ]);
+    }
 }

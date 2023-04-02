@@ -23,6 +23,8 @@ return function (App $app) {
         $group->get("/sites", [PageController::class, "sites"]);
         $group->get("/users", [PageController::class, "users"]);
         $group->get("/users/api/keys", [PageController::class, "keys"]);
+
+        $group->post("/sites", [PageController::class, "addsite"]);
     })
     ->add(AuthMiddleware::class);
 };

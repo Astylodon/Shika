@@ -6,7 +6,7 @@
     <table>
         <tr>
             <th>ID</th>
-            <th>Label</th>
+            <th>Name</th>
             <th>Site key</th>
         </tr>
 
@@ -14,8 +14,14 @@
             <tr>
                 <td>{{ site.id }}</td>
                 <td>{{ site.name }}</td>
-                <td>{{ site.site_key }}</td>
+                <td><code>{{ site.site_key }}</code></td>
             </tr>
         {% endfor %}
     </table>
+
+    <form action="" method="post">
+        <input type="text" name="name" required placeholder="Enter name">
+
+        <input type="submit" value="Add site">
+    </form>
 {% endblock %}
