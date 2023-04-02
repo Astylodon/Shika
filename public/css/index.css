@@ -1,0 +1,40 @@
+#date-selection {
+    margin-bottom: 3em;
+}
+
+#site-selection {
+    margin-bottom: 10em;
+}
+
+.selector {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+.selector > div {
+    border: 1px solid black;
+    border-radius: 5px;
+    text-align: center;
+    width: 50vw;
+}
+
+.selector > div:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.selector > div.selected {
+    background-color: #acebac;
+}
+
+#graphs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#graphs > canvas {
+    max-width: 50vw;
+    max-height: 50vh;
+}

@@ -2,13 +2,17 @@
 
 {% block title %}Login{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="css/login.css" />
+{% endblock %}
+
 {% block content %}
     {% if error is defined %}
         <div class="alert">{{ error }}</div>
     {% endif %}
 
     <form action="" method="post">
-        <input type="text" name="username" required placeholder="Enter username">
+        <input type="text" name="username" required autofocus value="{{ username|default }}" placeholder="Enter username">
         <input type="password" name="password" required placeholder="Enter password">
 
         <input type="submit" value="Login">

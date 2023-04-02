@@ -2,6 +2,22 @@
 
 {% block title %}Home{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="css/index.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/index.js"></script>
+{% endblock %}
+
 {% block content %}
     <h1>Welcome, {{ username }}</h1>
+    <div id="date-selection" class="selector">
+        <div data-time="86400">1 day</div>
+        <div data-time="604800">7 days</div>
+        <div data-time="2592000">30 days</div>
+    </div>
+    <div id="site-selection" class="selector"></div>
+    <div id="graphs">
+        <canvas id="pages"></canvas>
+        <canvas id="referrers"></canvas>
+    </div>
 {% endblock %}
