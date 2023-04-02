@@ -12,7 +12,7 @@
     {% endif %}
 
     <form action="" method="post">
-        <input type="text" name="username" required placeholder="Enter username">
+        <input type="text" name="username" required autofocus value="{{ username|default }}" placeholder="Enter username">
         <input type="password" name="password" required placeholder="Enter password">
 
         <input type="submit" value="Login">
