@@ -36,6 +36,8 @@ class SiteApiController
             throw new HttpNotFoundException($request);
         }
 
+        $site->total_visits = $this->visits->getTotalVisits($site->id);
+
         return $this->json($response, $site);
     }
 

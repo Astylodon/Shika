@@ -18,6 +18,11 @@ class VisitRepository
         $this->database->insert("visits", $visit);
     }
 
+    public function getTotalVisits(int $site)
+    {
+        return $this->database->getScalar("SELECT COUNT(*) FROM `visits` WHERE `site_id` = ?", $site);
+    }
+
     public function getReferrers(int $from = 0, int $site = 0)
     {
         $query = "SELECT `referrer_host` AS `referrer`, count(*) as `count` FROM `visits` WHERE `referrer_host` IS NOT NULL";
