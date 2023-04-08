@@ -1,6 +1,7 @@
 <?php
 
 use DI\ContainerBuilder;
+use Shika\Middleware\ErrorMiddleware;
 use Slim\Factory\AppFactory;
 
 require __DIR__ . "/../vendor/autoload.php";
@@ -20,5 +21,7 @@ $routes($app);
 
 $api = require __DIR__ . "/../routes/api.php";
 $api($app);
+
+$app->add(ErrorMiddleware::class);
 
 $app->run();
