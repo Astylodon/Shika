@@ -3,6 +3,8 @@
 use Shika\Controllers\AnalyticsController;
 use Shika\Controllers\LoginController;
 use Shika\Controllers\PageController;
+use Shika\Controllers\SiteController;
+use Shika\Controllers\UserController;
 use Shika\Middleware\AuthMiddleware;
 use Shika\Middleware\CorsMiddleware;
 use Slim\App;
@@ -20,11 +22,12 @@ return function (App $app) {
     // dashboard pages
     $app->group("", function (RouteCollectorProxy $group) {
         $group->get("/", [PageController::class, "index"]);
-        $group->get("/sites", [PageController::class, "sites"]);
-        $group->get("/users", [PageController::class, "users"]);
-        $group->get("/users/api/keys", [PageController::class, "keys"]);
 
-        $group->post("/sites", [PageController::class, "addsite"]);
+        $group->get("/sites", [SiteController::class, "sites"]);
+        $group->post("/sites", [SiteController::class, "add"]);
+
+        $group->get("/users", [UserController::class, "users"]);
+        $group->get("/users/api/keys", [PageController::class, "keys"]);
     })
     ->add(AuthMiddleware::class);
 };
