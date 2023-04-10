@@ -42,7 +42,7 @@ addEventListener("load", async (_) => {
         const div = document.createElement("div");
         div.innerHTML = site.name;
         div.onclick = async (_) => {
-            document.querySelector("#site-selection > div.selected").classList.remove("selected");
+            document.querySelector("#site-selection > div.selected")?.classList?.remove("selected");
             div.classList.add("selected")
             await displayData(site.id, document.querySelector("#date-selection > div.selected").dataset.time);
         };
@@ -52,10 +52,15 @@ addEventListener("load", async (_) => {
 
     for (const e of document.querySelectorAll("#date-selection > div")) {
         e.onclick = async (_) => {
+            const targetSite = document.querySelector("#site-selection > div.selected");
+            if (targetSite === null) { // There is nothing to display anyway
+                return;
+            }
+
             document.querySelector("#date-selection > div.selected").classList.remove("selected");
             e.classList.add("selected");
             epochTarget = parseInt(e.dataset.time);
-            await displayData(document.querySelector("#site-selection > div.selected").dataset.id, epochTarget);
+            await displayData(targetSite.dataset.id, epochTarget);
         };
     }
 
