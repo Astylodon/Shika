@@ -42,11 +42,9 @@ addEventListener("load", async (_) => {
         const div = document.createElement("div");
         div.innerHTML = site.name;
         div.onclick = async (_) => {
-            for (const elem of document.querySelectorAll("#site-selection > div")) {
-                elem.classList.remove("selected");
-                div.classList.add("selected")
-                await displayData(site.id, document.querySelector("#date-selection > div.selected").dataset.time);
-            }
+            document.querySelector("#site-selection > div.selected").classList.remove("selected");
+            div.classList.add("selected")
+            await displayData(site.id, document.querySelector("#date-selection > div.selected").dataset.time);
         };
         div.dataset.id = site.id;
         selection.appendChild(div);
