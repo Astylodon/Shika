@@ -51,7 +51,7 @@ class Migrate
 
         if (count($migrations) < 1)
         {
-            echo "No migrations to apply";
+            echo "No migrations to apply\n";
         }
 
         foreach ($migrations as $filename)
