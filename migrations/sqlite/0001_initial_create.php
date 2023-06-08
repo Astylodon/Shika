@@ -10,36 +10,36 @@ return new class implements Migration
         $database->exec("
             CREATE TABLE sites (
                 id          INTEGER PRIMARY KEY AUTOINCREMENT,
-                name        TEXT,
-                site_key    TEXT
+                name        TEXT NOT NULL,
+                site_key    TEXT NOT NULL
             )
         ");
 
         $database->exec("
             CREATE TABLE users (
                 id          INTEGER PRIMARY KEY AUTOINCREMENT,
-                username    TEXT COLLATE NOCASE,
-                password    TEXT
+                username    TEXT COLLATE NOCASE NOT NULL,
+                password    TEXT NOT NULL
             )
         ");
 
         $database->exec("
             CREATE TABLE user_api_keys (
                 id          INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id     INTEGER REFERENCES users(id),
-                label       TEXT,
-                key         TEXT UNIQUE,
-                created_at  TEXT
+                user_id     INTEGER NOT NULL REFERENCES users(id),
+                label       TEXT NOT NULL,
+                key         TEXT UNIQUE NOT NULL,
+                created_at  TEXT NOT NULL
             )
         ");
 
         $database->exec("
             CREATE TABLE visits (
                 id              INTEGER PRIMARY KEY AUTOINCREMENT,
-                site_id         INTEGER REFERENCES sites(id),
-                visit_at        TEXT,
-                visit_host      TEXT,
-                visit_path      TEXT,
+                site_id         INTEGER NOT NULL REFERENCES sites(id),
+                visit_at        TEXT NOT NULL,
+                visit_host      TEXT NOT NULL,
+                visit_path      TEXT NOT NULL,
                 referrer_host   TEXT,
                 referrer_path   TEXT
             )
