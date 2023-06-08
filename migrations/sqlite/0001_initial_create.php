@@ -18,7 +18,7 @@ return new class implements Migration
         $database->exec("
             CREATE TABLE users (
                 id          INTEGER PRIMARY KEY AUTOINCREMENT,
-                username    TEXT,
+                username    TEXT COLLATE NOCASE,
                 password    TEXT
             )
         ");
