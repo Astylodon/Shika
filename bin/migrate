@@ -1,0 +1,22 @@
+#!/usr/bin/php 
+<?php
+
+use DI\ContainerBuilder;
+use Shika\Database\Database;
+use Shika\Database\Migrations\Migrate;
+
+require __DIR__ . "/../vendor/autoload.php";
+
+$containerBuilder = new ContainerBuilder();
+
+$dependencies = require __DIR__ . "/../bootstrap/dependencies.php";
+$dependencies($containerBuilder);
+
+$container = $containerBuilder->build();
+
+$database = $container->get(Database::class);
+
+$migrate = new Migrate($database, "sqlite");
+$migrate->findMigrations();
+
+$migrate->migrate();
