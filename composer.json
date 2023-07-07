@@ -1,4 +1,7 @@
 {
+    "name": "xwilarg/shika",
+    "description": "Analytics for your website",
+    "license": "MIT",
     "require": {
         "slim/slim": "^4.11",
         "slim/psr7": "^1.6",
