@@ -27,4 +27,11 @@ class UserRepository
     {
         return $this->database->getAll("SELECT * FROM `users`");
     }
+
+    public function addUser(string $username, string $password)
+    {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $this->database->insert("users", [ "username" => $username, "password" => $hash ]);
+    }
 }

@@ -1,0 +1,44 @@
+#!/usr/bin/php 
+<?php
+
+use DI\ContainerBuilder;
+use Shika\Repositories\UserRepository;
+
+require __DIR__ . "/../vendor/autoload.php";
+
+$containerBuilder = new ContainerBuilder();
+
+$dependencies = require __DIR__ . "/../bootstrap/dependencies.php";
+$dependencies($containerBuilder);
+
+$container = $containerBuilder->build();
+
+$users = $container->get(UserRepository::class);
+
+$username = trim(readline("Enter username: "));
+
+// loop until the username doesn't exist
+while ($users->findByName($username) !== null)
+{
+    echo "A user with that username already exists.\n";
+
+    $username = trim(readline("Enter username: "));
+}
+
+if (strlen($username) < 1)
+{
+    echo "Username must not be empty.\n";
+    return;
+}
+
+$password = trim(readline("Enter password: "));
+
+if (strlen($password) < 1)
+{
+    echo "Password must not be empty.\n";
+    return;
+}
+
+$users->addUser($username, $password);
+
+echo "User $username has been added.\n";
