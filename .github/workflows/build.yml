@@ -39,7 +39,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: script
-          path: public/shika.js
+          path: public
       
       - uses: actions/upload-artifact@v3
         with:
