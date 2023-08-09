@@ -51,7 +51,7 @@ addEventListener("load", async (_) => {
     }
 
     if (sites.length === 0) { // Nothing to show
-        document.getElementById("content").innerHTML = "<h2>There is nothing here yet, go gather some data!</h2>";
+        document.getElementById("content").innerHTML = "<h2>There is nothing here yet, create a site first!</h2>";
     } else {
         for (const e of document.querySelectorAll("#date-selection > div")) {
             e.onclick = async (_) => {
