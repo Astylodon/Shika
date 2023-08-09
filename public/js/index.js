@@ -66,8 +66,7 @@ addEventListener("load", async (_) => {
                 await displayData(targetSite.dataset.id, epochTarget);
             };
         }
+        document.querySelector("#date-selection > div").classList.add("selected");
+        document.querySelector("#site-selection > div")?.click();
     }
-
-    document.querySelector("#date-selection > div").classList.add("selected");
-    document.querySelector("#site-selection > div")?.click();
 });
