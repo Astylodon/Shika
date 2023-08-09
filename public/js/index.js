@@ -50,18 +50,22 @@ addEventListener("load", async (_) => {
         selection.appendChild(div);
     }
 
-    for (const e of document.querySelectorAll("#date-selection > div")) {
-        e.onclick = async (_) => {
-            const targetSite = document.querySelector("#site-selection > div.selected");
-            if (targetSite === null) { // There is nothing to display anyway
-                return;
-            }
-
-            document.querySelector("#date-selection > div.selected").classList.remove("selected");
-            e.classList.add("selected");
-            epochTarget = parseInt(e.dataset.time);
-            await displayData(targetSite.dataset.id, epochTarget);
-        };
+    if (sites.length === 0) { // Nothing to show
+        document.getElementById("content").innerHTML = "<h2>There is nothing here yet, go gather some data!</h2>";
+    } else {
+        for (const e of document.querySelectorAll("#date-selection > div")) {
+            e.onclick = async (_) => {
+                const targetSite = document.querySelector("#site-selection > div.selected");
+                if (targetSite === null) { // There is nothing to display anyway
+                    return;
+                }
+    
+                document.querySelector("#date-selection > div.selected").classList.remove("selected");
+                e.classList.add("selected");
+                epochTarget = parseInt(e.dataset.time);
+                await displayData(targetSite.dataset.id, epochTarget);
+            };
+        }
     }
 
     document.querySelector("#date-selection > div").classList.add("selected");
