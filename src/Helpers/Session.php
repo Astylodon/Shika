@@ -10,6 +10,8 @@ class Session
     public function __construct()
     {
         session_name("shika_session");
+        session_set_cookie_params(["httponly" => true, "samesite" => "Strict"]);
+
         session_start();
     }
 
