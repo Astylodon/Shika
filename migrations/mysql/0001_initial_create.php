@@ -48,5 +48,8 @@ return new class implements Migration
         ");
 
         $database->exec("ALTER TABLE visits ADD INDEX (site_id, visit_at)");
+
+        $database->exec("ALTER TABLE visits ADD CONSTRAINT FOREIGN KEY (site_id) REFERENCES sites (id)");
+        $database->exec("ALTER TABLE user_api_keys ADD CONSTRAINT FOREIGN KEY (user_id) REFERENCES users (id)");
     }
 };
