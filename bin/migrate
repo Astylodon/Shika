@@ -16,7 +16,7 @@ $container = $containerBuilder->build();
 
 $database = $container->get(Database::class);
 
-$migrate = new Migrate($database, "sqlite");
+$migrate = new Migrate($database, $database->getDriver());
 $migrate->findMigrations();
 
 $migrate->migrate();
