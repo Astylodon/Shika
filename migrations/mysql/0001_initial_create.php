@@ -30,7 +30,7 @@ return new class implements Migration
                 id          INT(11) AUTO_INCREMENT PRIMARY KEY,
                 user_id     INT(11) NOT NULL,
                 label       VARCHAR(50) NOT NULL,
-                key         VARCHAR(64) UNIQUE NOT NULL,
+                api_key     VARCHAR(64) UNIQUE NOT NULL,
                 created_at  DATETIME NOT NULL
             )
         ");

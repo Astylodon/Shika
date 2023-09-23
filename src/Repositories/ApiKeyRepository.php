@@ -15,7 +15,7 @@ class ApiKeyRepository
 
     public function findByKey(string $key)
     {
-        return $this->database->get("SELECT * FROM `user_api_keys` WHERE key = ?", $key);
+        return $this->database->get("SELECT * FROM `user_api_keys` WHERE api_key = ?", $key);
     }
 
     public function getKeys()
@@ -28,7 +28,7 @@ class ApiKeyRepository
         $data = [
             "user_id" => $user,
             "label" => $label,
-            "key" => $key,
+            "api_key" => $key,
             "created_at" => gmdate("Y-m-d H:i:s")
         ];
 
