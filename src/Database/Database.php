@@ -99,4 +99,12 @@ class Database
         // execute store query
         return $this->exec($query, ...array_values($values));
     }
+
+    /**
+     * Gets the name of the current connection driver
+     */
+    public function getDriver(): string
+    {
+        return $this->conn->getAttribute(\PDO::ATTR_DRIVER_NAME);
+    }
 }

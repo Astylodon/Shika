@@ -28,7 +28,7 @@ return new class implements Migration
                 id          INTEGER PRIMARY KEY AUTOINCREMENT,
                 user_id     INTEGER NOT NULL REFERENCES users(id),
                 label       TEXT NOT NULL,
-                key         TEXT UNIQUE NOT NULL,
+                api_key     TEXT UNIQUE NOT NULL,
                 created_at  TEXT NOT NULL
             )
         ");

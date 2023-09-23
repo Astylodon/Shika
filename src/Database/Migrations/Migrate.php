@@ -10,6 +10,7 @@ class Migrate
 
     private string $migrationsPath;
     private array $migrations;
+    private string $driver;
 
     public function __construct(Database $database, string $driver)
     {
@@ -17,6 +18,7 @@ class Migrate
 
         $this->migrationsPath = getcwd() . DIRECTORY_SEPARATOR . "migrations" . DIRECTORY_SEPARATOR . $driver;
         $this->migrations = [];
+        $this->driver = $driver;
     }
 
     /**
@@ -78,6 +80,13 @@ class Migrate
 
     private function ensureMigrations()
     {
-        $this->database->exec("CREATE TABLE IF NOT EXISTS migrations (migration TEXT PRIMARY KEY)");
+        if ($this->driver == "sqlite")
+        {
+            $this->database->exec("CREATE TABLE IF NOT EXISTS migrations (migration TEXT PRIMARY KEY)");
+        }
+        else
+        {
+            $this->database->exec("CREATE TABLE IF NOT EXISTS migrations (migration VARCHAR(50) PRIMARY KEY)");
+        }
     }
 }
