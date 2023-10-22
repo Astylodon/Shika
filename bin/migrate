@@ -1,9 +1,9 @@
 #!/usr/bin/php 
 <?php
 
+use Astylodon\Migrations\Migrate;
 use DI\ContainerBuilder;
 use Shika\Database\Database;
-use Shika\Database\Migrations\Migrate;
 
 require __DIR__ . "/../vendor/autoload.php";
 
@@ -15,8 +15,9 @@ $dependencies($containerBuilder);
 $container = $containerBuilder->build();
 
 $database = $container->get(Database::class);
+$driver = $database->getDriver();
 
-$migrate = new Migrate($database, $database->getDriver());
-$migrate->findMigrations();
+$migrate = new Migrate($database, $driver);
+$migrate->findMigrations(__DIR__ . "/../migrations/" . $driver);
 
 $migrate->migrate();

@@ -4,8 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00422dfb7c379c66f0d54a11a1b07a83",
+    "content-hash": "f7bf5f6bfd4f84ac07a2dfda09baf881",
     "packages": [
+        {
+            "name": "astylodon/migrations",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Astylodon/Migrations.git",
+                "reference": "8b27d832f22cb47878939fb1448810014f9f8fb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Astylodon/Migrations/zipball/8b27d832f22cb47878939fb1448810014f9f8fb6",
+                "reference": "8b27d832f22cb47878939fb1448810014f9f8fb6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Astylodon\\Migrations\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A simple database migrations library for PHP",
+            "support": {
+                "issues": "https://github.com/Astylodon/Migrations/issues",
+                "source": "https://github.com/Astylodon/Migrations/tree/v1.0.0"
+            },
+            "time": "2023-10-22T13:42:19+00:00"
+        },
         {
             "name": "fig/http-message-util",
             "version": "1.1.5",

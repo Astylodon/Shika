@@ -1,11 +1,11 @@
 <?php
 
-use Shika\Database\Database;
-use Shika\Database\Migrations\Migration;
+use Astylodon\Migrations\Database\DatabaseInterface;
+use Astylodon\Migrations\Migration;
 
 return new class implements Migration
 {
-    public function up(Database $database)
+    public function up(DatabaseInterface $database)
     {
         $database->exec("
             CREATE TABLE sites (

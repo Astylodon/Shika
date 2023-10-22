@@ -2,7 +2,9 @@
 
 namespace Shika\Database;
 
-class Database
+use Astylodon\Migrations\Database\DatabaseInterface;
+
+class Database implements DatabaseInterface
 {
     private \PDO $conn;
 
