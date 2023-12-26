@@ -44,5 +44,5 @@ class Twig
         $response->getBody()->write($this->environment->render($name, $data));
 
         return $response;
-    } 
+    }
 }

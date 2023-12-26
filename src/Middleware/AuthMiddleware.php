@@ -33,6 +33,7 @@ class AuthMiddleware
         }
 
         $this->twig->setGlobal("current_path", $request->getUri()->getPath());
+        $this->twig->setGlobal("user_username", $this->session->get("user.name"));
 
         return $handler->handle($request);
     }

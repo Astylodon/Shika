@@ -10,7 +10,10 @@ export default defineConfig({
         manifest: "manifest.json",
 
         rollupOptions: {
-            input: "assets/css/app.scss"
+            input: {
+                css: "assets/css/app.scss",
+                graphs: "assets/js/graphs.js"
+            }
         }
     }
 })
