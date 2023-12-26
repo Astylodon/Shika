@@ -21,7 +21,9 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: script
-          path: public/shika.js
+          path: |
+            public/shika.js
+            public/build
         
   build-php:
     needs: build-script
