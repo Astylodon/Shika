@@ -1,0 +1,23 @@
+.login {
+    height: 90vh;
+}
+
+.login .form-group {
+    width: 25vh;
+}
+
+.login input[type=submit] {
+    width: 10vh;
+}
+
+.top-alert {
+    position: absolute;
+    width: 100%;
+    background-color: $danger;
+    text-align: center;
+    top: 0;
+    left: 0;
+    color: white;
+    padding-bottom: .8em;
+    padding-top: .8em;
+}

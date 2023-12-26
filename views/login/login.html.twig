@@ -2,19 +2,22 @@
 
 {% block title %}Login{% endblock %}
 
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="css/login.css" />
-{% endblock %}
-
 {% block body %}
     {% if error is defined %}
-        <div class="alert">{{ error }}</div>
+        <div class="top-alert">{{ error }}</div>
     {% endif %}
 
-    <form action="" method="post">
-        <input type="text" name="username" required autofocus value="{{ username|default }}" placeholder="Enter username">
-        <input type="password" name="password" required placeholder="Enter password">
+    <form action="" method="post" class="d-flex justify-content-center align-items-center flex-column login">
+        <div class="mb-2 form-group">
+            <label for="usernameInput" class="form-label">Username</label>
+            <input type="text" id="usernameInput" name="username" class="form-control" required autofocus value="{{ username|default }}" placeholder="Enter a username">
+        </div>
 
-        <input type="submit" value="Login">
+        <div class="mb-2 form-group">
+            <label for="passwordInput" class="form-label">Password</label>
+            <input type="password" id="passwordInput" name="password" class="form-control" required placeholder="Enter a password">
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Login">
     </form>
 {% endblock %}
