@@ -1,8 +1,13 @@
 {
+  "name": "shika",
   "scripts": {
-    "build": "esbuild scripts/src/shika.js --minify --format=iife --outfile=./public/shika.js"
+    "build": "vite build"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.2"
   },
   "devDependencies": {
-    "esbuild": "^0.17.10"
+    "sass": "^1.69.5",
+    "vite": "^5.0.10"
   }
 }
