@@ -1,3 +1,5 @@
+{% import "helpers.html.twig" as helpers %}
+
 {% extends "base.html.twig" %}
 
 {% block body %}
@@ -12,20 +14,20 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link {{ helpers.navbar_active("/") }}" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/sites">Sites</a>
+                        <a class="nav-link {{ helpers.navbar_active("/sites") }}" href="/sites">Sites</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/users">Users</a>
+                        <a class="nav-link {{ helpers.navbar_active("/users") }}" href="/users">Users</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
 {% endblock %}

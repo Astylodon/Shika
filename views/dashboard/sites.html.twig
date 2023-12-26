@@ -3,12 +3,21 @@
 {% block title %}Sites{% endblock %}
 
 {% block content %}
-    <table>
+    <h1>Sites</h1>
+    <p>Manage your sites here, you can see existing sites or add a new one.</p>
+
+    <table class="table">
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Site key</th>
         </tr>
+
+        {% if sites|length < 1 %}
+            <tr>
+                <td colspan="3" class="text-center">You have no sites, add one below.</td>
+            </tr>
+        {% endif %}
 
         {% for site in sites %}
             <tr>
@@ -19,9 +28,13 @@
         {% endfor %}
     </table>
 
-    <form action="" method="post">
-        <input type="text" name="name" required placeholder="Enter name">
+    <form action="" method="post" class="row gx-2">
+        <div class="col-auto">
+            <input type="text" class="form-control" name="name" required placeholder="Enter a name">
+        </div>
 
-        <input type="submit" value="Add site">
+        <div class="col-auto">
+            <input type="submit" class="btn btn-primary" value="Add site">
+        </div>
     </form>
 {% endblock %}

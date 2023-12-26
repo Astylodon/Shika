@@ -21,8 +21,8 @@ class Vite
     /**
      * Gets a file from the manifest
      * 
-     * @param   string  $name   The file path
-     * @return  string  The built file path
+     * @param string $name The file path
+     * @return string The built file path
      */
     public function getFile(string $name)
     {

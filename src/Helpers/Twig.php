@@ -22,6 +22,17 @@ class Twig
     }
 
     /**
+     * Sets a global variable available to templates
+     * 
+     * @param string $name The name of the global
+     * @param string $value The value of the global
+     */
+    public function setGlobal(string $name, string $value)
+    {
+        $this->environment->addGlobal($name, $value);
+    }
+
+    /**
      * Renders a Twig template and writes it to the response stream
      * 
      * @param ResponseInterface $response The response
@@ -33,5 +44,5 @@ class Twig
         $response->getBody()->write($this->environment->render($name, $data));
 
         return $response;
-    }
+    } 
 }
