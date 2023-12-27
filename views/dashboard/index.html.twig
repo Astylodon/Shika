@@ -2,25 +2,51 @@
 
 {% block title %}Home{% endblock %}
 
-{% block head %}
-    <link rel="stylesheet" href="css/index.css" />
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/index.js"></script>
-{% endblock %}
-
 {% block content %}
-    <h1>Welcome, {{ username }}</h1>
-    <div id="content">
-        <div id="date-selection" class="selector">
-            <div data-time="86400">1 day</div>
-            <div data-time="604800">7 days</div>
-            <div data-time="2592000">30 days</div>
+    <h1>Welcome, {{ user_username }}</h1>
+    <p>This is the Shika dashboard, here you can view statistics of your websites. Use the links above to manage your sites or users.</p>
+
+    <div class="row gx-2">
+        <div class="col-auto">
+            <select class="form-select" id="site-select">
+                {% for site in sites %}
+                    <option value="{{ site.id }}">{{ site.name }}</option>
+                {% endfor %}
+            </select>
         </div>
-        <div id="site-selection" class="selector"></div>
-        <div id="graphs">
-            <canvas id="pages"></canvas>
-            <canvas id="referrers"></canvas>
+
+        <div class="col-2">
+            <select class="form-select" id="time-select">
+                <option value="86400">1 day</option>
+                <option value="604800">7 days</option>
+                <option value="2592000">30 days</option>
+            </select>
         </div>
     </div>
+
+    <div class="row mt-2">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pages</h5>
+                    
+                    <canvas id="pages"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Referrers</h5>
+
+                    <canvas id="referrers"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{{ "js/graphs.js" | vite }}"></script>
 {% endblock %}

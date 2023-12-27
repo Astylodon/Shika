@@ -3,3 +3,4 @@ vendor/
 *.mmdb
 node_modules/
 public/shika.js
+public/build

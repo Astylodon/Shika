@@ -5,16 +5,31 @@ namespace Shika\Helpers;
 use Psr\Http\Message\ResponseInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
 
 class Twig
 {
     private Environment $environment;
 
-    public function __construct()
+    public function __construct(Vite $vite)
     {
         $loader = new FilesystemLoader("../views");
 
-        $this->environment = new Environment($loader);
+        $environment = new Environment($loader);
+        $environment->addFilter(new TwigFilter("vite", [$vite, "getFile"]));
+
+        $this->environment = $environment;
+    }
+
+    /**
+     * Sets a global variable available to templates
+     * 
+     * @param string $name The name of the global
+     * @param string $value The value of the global
+     */
+    public function setGlobal(string $name, string $value)
+    {
+        $this->environment->addGlobal($name, $value);
     }
 
     /**
