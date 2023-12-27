@@ -3,20 +3,24 @@
 namespace Shika\Helpers;
 
 use Psr\Http\Message\ResponseInterface;
+use Shika\Security\CsrfToken;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class Twig
 {
     private Environment $environment;
 
-    public function __construct(Vite $vite)
+    public function __construct(Vite $vite, CsrfToken $token)
     {
         $loader = new FilesystemLoader("../views");
 
         $environment = new Environment($loader);
+        
         $environment->addFilter(new TwigFilter("vite", [$vite, "getFile"]));
+        $environment->addFunction(new TwigFunction("csrf_token", [$token, "getToken"]));
 
         $this->environment = $environment;
     }

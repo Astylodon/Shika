@@ -29,6 +29,8 @@
     </table>
 
     <form action="" method="post" class="row gx-2">
+        <input type="hidden" name="token" value="{{ csrf_token() }}">
+
         <div class="col-auto">
             <input type="text" class="form-control" name="name" required placeholder="Enter a name">
         </div>
