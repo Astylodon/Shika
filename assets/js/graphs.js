@@ -1,7 +1,7 @@
-import { Chart, BarController, BarElement, CategoryScale, LinearScale, Colors } from "chart.js"
+import { Chart, BarController, BarElement, CategoryScale, LinearScale, Colors, Tooltip } from "chart.js"
 
 // Bundle optimization
-Chart.register(BarController, BarElement, CategoryScale, LinearScale, Colors)
+Chart.register(BarController, BarElement, CategoryScale, LinearScale, Colors, Tooltip)
 
 // Current charts
 let pagesChart = null
