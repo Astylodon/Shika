@@ -77,6 +77,6 @@ class AnalyticsController
         // insert the visit
         $this->visits->addVisit($visit);
 
-        return $response->withStatus(200);
+        return $response->withStatus(204);
     }
 }
