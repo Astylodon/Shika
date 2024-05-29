@@ -12,6 +12,7 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 css: "assets/css/app.scss",
+                main: "assets/js/main.js",
                 graphs: "assets/js/graphs.js"
             }
         }
