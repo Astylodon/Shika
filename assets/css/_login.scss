@@ -2,8 +2,16 @@
     height: 90vh;
 }
 
-.login .form-group {
-    width: 25vh;
+@media (min-width: 540px) {
+    .login .form-group {
+        width: 250px;
+    }
+}
+
+@media (max-width: 540px) {
+    .login .form-group {
+        width: 100%;
+    }
 }
 
 .login input[type=submit] {
