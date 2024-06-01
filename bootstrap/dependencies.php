@@ -1,6 +1,7 @@
 <?php
 
 use DI\ContainerBuilder;
+use Dotenv\Dotenv;
 use Shika\Database\Database;
 use Shika\Helpers\Session;
 use Shika\Repositories\ApiKeyRepository;
@@ -13,6 +14,11 @@ use function DI\autowire;
 use function DI\env;
 
 return function (ContainerBuilder $container) {
+    // Load a .env file
+    $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
+    $dotenv->safeLoad();
+
+    // Add all services to the container
     $container->addDefinitions(
         [
             Database::class =>
