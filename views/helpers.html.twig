@@ -1,3 +1,8 @@
 {% macro navbar_active(link) %}
     {{ request.path == link ? "active" : "" }}
 {% endmacro %}
+
+{% macro role_to_string(role) %}
+    {% set roles = ["User", "Manager", "Admin"] %}
+    {{ roles[role] }}
+{% endmacro %}

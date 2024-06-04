@@ -16,12 +16,17 @@
                     <li class="nav-item">
                         <a class="nav-link {{ helpers.navbar_active("/") }}" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ helpers.navbar_active("/sites") }}" href="/sites">Sites</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ helpers.navbar_active("/users") }}" href="/users">Users</a>
-                    </li>
+                    {% if user_is_manager(request.user) %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ helpers.navbar_active("/sites") }}" href="/sites">Sites</a>
+                        </li>
+                    {% endif %}
+
+                    {% if user_is_admin(request.user) %}
+                        <li class="nav-item">
+                            <a class="nav-link {{ helpers.navbar_active("/users") }}" href="/users">Users</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

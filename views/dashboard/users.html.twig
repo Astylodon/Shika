@@ -1,3 +1,5 @@
+{% import "helpers.html.twig" as helpers %}
+
 {% extends "dashboard.html.twig" %}
 
 {% block title %}Users{% endblock %}
@@ -10,12 +12,14 @@
         <tr>
             <th>ID</th>
             <th>Username</th>
+            <th>Role</th>
         </tr>
 
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
+                <td>{{ helpers.role_to_string(user.role) }}
             </tr>
         {% endfor %}
     </table>

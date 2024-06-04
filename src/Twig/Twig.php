@@ -5,6 +5,7 @@ namespace Shika\Twig;
 use Psr\Http\Message\ResponseInterface;
 use Shika\Helpers\Vite;
 use Shika\Security\CsrfToken;
+use Shika\Security\User;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
@@ -22,6 +23,10 @@ class Twig
         
         $environment->addFilter(new TwigFilter("vite", [$vite, "getFile"]));
         $environment->addFunction(new TwigFunction("csrf_token", [$token, "getToken"]));
+
+        // Access control helpers
+        $environment->addFunction(new TwigFunction("user_is_manager", [User::class, "isManager"]));
+        $environment->addFunction(new TwigFunction("user_is_admin", [User::class, "isAdmin"]));
 
         $this->environment = $environment;
     }

@@ -7,6 +7,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Shika\Helpers\JsonResponse;
 use Shika\Repositories\SiteRepository;
 use Shika\Security\CsrfToken;
+use Shika\Security\Role;
+use Shika\Security\User;
 use Shika\Twig\Twig;
 use Slim\Exception\HttpBadRequestException;
 
@@ -27,11 +29,16 @@ class SiteController
 
     public function sites(Request $request, Response $response)
     {
+        User::checkRole($request, Role::Manager);
+
         return $this->twig->render($response, "dashboard/sites.html.twig", [ "sites" => $this->sites->getSites() ]);
     }
 
     public function add(Request $request, Response $response)
     {
+        User::checkRole($request, Role::Manager);
+
+        // Get the body
         $body = $request->getParsedBody();
 
         if ($body === null || !isset($body["name"]) || !isset($body["token"]))
