@@ -1,8 +1,9 @@
 <?php
 
-namespace Shika\Helpers;
+namespace Shika\Twig;
 
 use Psr\Http\Message\ResponseInterface;
+use Shika\Helpers\Vite;
 use Shika\Security\CsrfToken;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -29,9 +30,9 @@ class Twig
      * Sets a global variable available to templates
      * 
      * @param string $name The name of the global
-     * @param string $value The value of the global
+     * @param mixed $value The value of the global
      */
-    public function setGlobal(string $name, string $value)
+    public function setGlobal(string $name, mixed $value)
     {
         $this->environment->addGlobal($name, $value);
     }

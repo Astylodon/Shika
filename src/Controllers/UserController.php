@@ -5,8 +5,8 @@ namespace Shika\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Shika\Helpers\JsonResponse;
-use Shika\Helpers\Twig;
 use Shika\Repositories\UserRepository;
+use Shika\Twig\Twig;
 
 class UserController
 {

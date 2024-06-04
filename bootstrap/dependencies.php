@@ -8,7 +8,7 @@ use Shika\Repositories\ApiKeyRepository;
 use Shika\Repositories\SiteRepository;
 use Shika\Repositories\UserRepository;
 use Shika\Repositories\VisitRepository;
-use Shika\Helpers\Twig;
+use Shika\Twig\Twig;
 
 use function DI\autowire;
 use function DI\env;

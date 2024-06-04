@@ -7,6 +7,7 @@ use Shika\Controllers\SiteController;
 use Shika\Controllers\UserController;
 use Shika\Middleware\AuthMiddleware;
 use Shika\Middleware\CorsMiddleware;
+use Shika\Middleware\TwigMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -29,5 +30,6 @@ return function (App $app) {
         $group->get("/users", [UserController::class, "users"]);
         $group->get("/users/api/keys", [PageController::class, "keys"]);
     })
+    ->add(TwigMiddleware::class)
     ->add(AuthMiddleware::class);
 };
