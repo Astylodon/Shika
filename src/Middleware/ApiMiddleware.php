@@ -2,10 +2,12 @@
 
 namespace Shika\Middleware;
 
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Shika\Helpers\Session;
 use Shika\Repositories\ApiKeyRepository;
+use Shika\Repositories\UserRepository;
+use Slim\Exception\HttpUnauthorizedException;
 use Slim\Psr7\Response;
 
 /**
@@ -14,27 +16,51 @@ use Slim\Psr7\Response;
 class ApiMiddleware
 { 
     private ApiKeyRepository $keys;
+    private UserRepository $users;
 
-    public function __construct(ApiKeyRepository $keys)
+    public function __construct(ApiKeyRepository $keys, UserRepository $users)
     {
         $this->keys = $keys;
+        $this->users = $users;
     }
 
     public function __invoke(Request $request, RequestHandler $handler)
     {
-        $key = $request->getHeader("X-Api-Key");
+        $userId = $this->getUser($request);
 
-        if (count($key) > 0 && $this->keys->findByKey($key[0]))
+        if ($userId)
         {
+            $user = $this->users->findById($userId);
+
+            // Attach the user to the request
+            $request = $request->withAttribute("user", $user);
+
             return $handler->handle($request);
         }
 
-        // also allow access to API with a valid session
-        if ((new Session)->has("user.id"))
+        throw new HttpUnauthorizedException($request);
+    }
+
+    private function getUser(Request $request): ?int
+    {
+        $header = $request->getHeader("X-Api-Key");
+
+        // Check for API key header
+        if (count($header) > 0)
         {
-            return $handler->handle($request);
+            $key = $this->keys->findByKey($header[0]);
+
+            return $key != null ? $key->user_id : null;
         }
 
-        return (new Response)->withStatus(401);
+        // Also allow access to API with a valid session
+        $session = new Session();
+
+        if ($session->has("user.id"))
+        {
+            return $session->get("user.id");
+        }
+
+        return null;
     }
 }
