@@ -2,10 +2,10 @@
 
 namespace Shika\Middleware;
 
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Shika\Helpers\Session;
-use Shika\Helpers\Twig;
+use Shika\Repositories\UserRepository;
 use Slim\Psr7\Response;
 
 /**
@@ -14,12 +14,12 @@ use Slim\Psr7\Response;
 class AuthMiddleware
 {
     private Session $session;
-    private Twig $twig;
+    private UserRepository $users;
 
-    public function __construct(Session $session, Twig $twig)
+    public function __construct(Session $session, UserRepository $users)
     {
         $this->session = $session;
-        $this->twig = $twig;
+        $this->users = $users;
     }
 
     public function __invoke(Request $request, RequestHandler $handler)
@@ -28,12 +28,14 @@ class AuthMiddleware
         {
             $response = new Response();
 
-            // redirect to login page
+            // Redirect to the login page
             return $response->withStatus(302)->withHeader("Location", "/login");
         }
 
-        $this->twig->setGlobal("current_path", $request->getUri()->getPath());
-        $this->twig->setGlobal("user_username", $this->session->get("user.name"));
+        // Find the user from the session
+        $user = $this->users->findById($this->session->get("user.id"));
+
+        $request = $request->withAttribute("user", $user);
 
         return $handler->handle($request);
     }

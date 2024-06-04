@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h1>Welcome, {{ user_username }}</h1>
+    <h1>Welcome, {{ request.user.username }}</h1>
     <p>This is the Shika dashboard, here you can view statistics of your websites. Use the links above to manage your sites or users.</p>
 
     <div class="row gx-2">

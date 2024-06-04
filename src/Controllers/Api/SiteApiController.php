@@ -7,6 +7,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Shika\Helpers\JsonResponse;
 use Shika\Repositories\SiteRepository;
 use Shika\Repositories\VisitRepository;
+use Shika\Security\Role;
+use Shika\Security\User;
 use Slim\Exception\HttpNotFoundException;
 
 class SiteApiController
@@ -24,11 +26,16 @@ class SiteApiController
 
     public function sites(Request $request, Response $response)
     {
+        User::checkRole($request, Role::Manager);
+
         return $this->json($response, $this->sites->getSites());
     }
 
     public function site(Request $request, Response $response, array $args)
     {
+        User::checkRole($request, Role::Manager);
+
+        // Find the site
         $site = $this->sites->findById($args["id"]);
         
         if (!$site)
