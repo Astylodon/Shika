@@ -1,6 +1,10 @@
 const currentScript = document.currentScript
 
 function send() {
+    if (window.location.hostname == "localhost") {
+        return; // Debug environment
+    }
+
     const url = currentScript.dataset.url; // data-url
     const siteKey = currentScript.dataset.siteKey; // data-site-key
 
