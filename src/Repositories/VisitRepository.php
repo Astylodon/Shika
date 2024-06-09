@@ -20,7 +20,7 @@ class VisitRepository
 
     public function getTotalVisits(int $site)
     {
-        return $this->database->getScalar("SELECT COUNT(*) FROM `visits` WHERE `site_id` = ?", $site);
+        return $this->database->getColumn("SELECT COUNT(*) FROM `visits` WHERE `site_id` = ?", $site);
     }
 
     public function getReferrers(int $from = 0, int $site = 0)

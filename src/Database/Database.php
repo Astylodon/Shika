@@ -45,7 +45,7 @@ class Database implements DatabaseInterface
     {
         $sth = $this->conn->prepare($query);
         $sth->execute($params);
-    
+
         return $sth->fetchAll(\PDO::FETCH_OBJ);
     }
 
@@ -55,12 +55,26 @@ class Database implements DatabaseInterface
      * @param string $query The query to execute
      * @param mixed $params The parameters to bind in the query
      */
-    public function getScalar(string $query, mixed ...$params)
+    public function getColumn(string $query, mixed ...$params)
     {
         $sth = $this->conn->prepare($query);
         $sth->execute($params);
-    
+
         return $sth->fetchColumn();
+    }
+
+    /**
+     * Executes a query and returns a single column for all rows
+     * 
+     * @param string $query The query to execute
+     * @param mixed $params The parameters to bind in the query
+     */
+    public function getColumns(string $query, mixed ...$params)
+    {
+        $sth = $this->conn->prepare($query);
+        $sth->execute($params);
+
+        return $sth->fetchAll(\PDO::FETCH_COLUMN);
     }
 
     /**
@@ -73,7 +87,7 @@ class Database implements DatabaseInterface
     {
         $sth = $this->conn->prepare($query);
         $sth->execute($params);
-    
+
         return $sth->rowCount();
     }
 
