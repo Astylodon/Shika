@@ -28,6 +28,11 @@ class SiteRepository
         return $this->database->getAll("SELECT * FROM `sites`");
     }
 
+    public function getAllowedHosts(int $id)
+    {
+        return $this->database->getColumns("SELECT allowed_host FROM `site_allowed_hosts` WHERE `site_id` = ?", $id);
+    }
+
     public function addSite(string $name, string $key)
     {
         $this->database->insert("sites", [ "name" => $name, "site_key" => $key ]);

@@ -54,6 +54,14 @@ class AnalyticsController
             return $this->json($response, [ "error" => "Invalid href" ])->withStatus(400);
         }
 
+        // check if the host is allowed
+        $allowed = $this->sites->getAllowedHosts($site->id);
+
+        if (!(count($allowed) == 0 || in_array($location["host"], $allowed)))
+        {
+            return $response->withStatus(204);
+        }
+
         // build the visit
         $visit = [
             "site_id" => $site->id,
