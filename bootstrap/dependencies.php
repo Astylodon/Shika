@@ -3,6 +3,7 @@
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 use Shika\Database\Database;
+use Shika\Helpers\GeoLocation;
 use Shika\Helpers\Session;
 use Shika\Repositories\ApiKeyRepository;
 use Shika\Repositories\SiteRepository;
@@ -31,6 +32,8 @@ return function (ContainerBuilder $container) {
 
             Twig::class => autowire(Twig::class),
             Session::class => autowire(Session::class),
+
+            GeoLocation::class => autowire(GeoLocation::class)->constructor(env("MAXMIND_PATH", "")),
         ]
     );
 };

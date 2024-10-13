@@ -78,7 +78,7 @@ class DeviceInfo
     /**
      * Gets whether the agent is a browser
      */
-    public function isBrowser()
+    public function isBrowser():  bool
     {
         return $this->detector->isBrowser();
     }

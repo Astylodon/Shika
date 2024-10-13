@@ -5,6 +5,7 @@ namespace Shika\Controllers;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Shika\Helpers\DeviceInfo;
+use Shika\Helpers\GeoLocation;
 use Shika\Helpers\JsonResponse;
 use Shika\Repositories\SiteRepository;
 use Shika\Repositories\VisitRepository;
@@ -15,11 +16,13 @@ class AnalyticsController
 
     private VisitRepository $visits;
     private SiteRepository $sites;
+    private GeoLocation $location;
 
-    public function __construct(VisitRepository $visits, SiteRepository $sites)
+    public function __construct(VisitRepository $visits, SiteRepository $sites, GeoLocation $location)
     {
         $this->visits = $visits;
         $this->sites = $sites;
+        $this->location = $location;
     }
 
     public function send(Request $request, Response $response)
@@ -92,6 +95,18 @@ class AnalyticsController
             if (isset($referrer["path"]) && $referrer["path"] != "/")
             {
                 $visit["referrer_path"] = $referrer["path"];
+            }
+        }
+
+        // add location info
+        if ($this->location->isAvailable())
+        {
+            $address = $request->getServerParams()["REMOTE_ADDR"];
+            $country = $this->location->getCountry($address);
+
+            if ($country !== null)
+            {
+                $visit["country_code"] = $country["iso_code"];
             }
         }
 
