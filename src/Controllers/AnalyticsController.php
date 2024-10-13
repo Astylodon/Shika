@@ -4,6 +4,7 @@ namespace Shika\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Shika\Helpers\DeviceInfo;
 use Shika\Helpers\JsonResponse;
 use Shika\Repositories\SiteRepository;
 use Shika\Repositories\VisitRepository;
@@ -62,6 +63,14 @@ class AnalyticsController
             return $response->withStatus(204);
         }
 
+        // get the agent info
+        $device = new DeviceInfo($request);
+
+        if (!$device->isBrowser())
+        {
+            return $response->withStatus(204);
+        }
+
         // build the visit
         $visit = [
             "site_id" => $site->id,
@@ -69,6 +78,10 @@ class AnalyticsController
 
             "visit_host" => $location["host"],
             "visit_path" => $location["path"],
+
+            "browser" => $device->getBrowser(),
+            "operating_system" => $device->getOperatingSystem(),
+            "device_type" => $device->getDeviceType(),
         ];
 
         // add the referrer if we have one
