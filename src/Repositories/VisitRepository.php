@@ -23,9 +23,9 @@ class VisitRepository
         return $this->database->getColumn("SELECT COUNT(*) FROM `visits` WHERE `site_id` = ?", $site);
     }
 
-    public function getReferrers(int $from = 0, int $site = 0)
+    public function groupBy(string $field, string $name, int $from = 0, int $site = 0)
     {
-        $query = "SELECT `referrer_host` AS `referrer`, count(*) as `count` FROM `visits` WHERE `referrer_host` IS NOT NULL";
+        $query = "SELECT `$field` AS `$name`, count(*) as `count` FROM `visits` WHERE `$field` IS NOT NULL";
         $params = [];
         
         if ($site > 0)
@@ -40,29 +40,7 @@ class VisitRepository
             array_push($params, gmdate("Y-m-d H:i:s", $from));
         }
 
-        $query .= " GROUP BY `referrer_host` ORDER BY `count` DESC";
-
-        return $this->database->getAll($query, ...$params);
-    }
-
-    public function getPages(int $from = 0, int $site = 0)
-    {
-        $query = "SELECT `visit_path` AS `path`, count(*) as `count` FROM `visits` WHERE `visit_path` IS NOT NULL";
-        $params = [];
-        
-        if ($site > 0)
-        {
-            $query .= " AND `site_id` = ?";
-            array_push($params, $site);
-        }
-
-        if ($from > 0)
-        {
-            $query .= " AND `visit_at` > ?";
-            array_push($params, gmdate("Y-m-d H:i:s", $from));
-        }
-
-        $query .= " GROUP BY `visit_path` ORDER BY `count` DESC";
+        $query .= " GROUP BY `$field` ORDER BY `count` DESC";
 
         return $this->database->getAll($query, ...$params);
     }

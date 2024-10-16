@@ -47,45 +47,4 @@ class SiteApiController
 
         return $this->json($response, $site);
     }
-
-    public function referrers(Request $request, Response $response, array $args)
-    {
-        $site = $this->sites->findById($args["id"]);
-        
-        if (!$site)
-        {
-            throw new HttpNotFoundException($request);
-        }
-
-        $from = $this->getFromTime($request);
-        
-        return $this->json($response, $this->visits->getReferrers($from, $site->id));
-    }
-
-    public function pages(Request $request, Response $response, array $args)
-    {
-        $site = $this->sites->findById($args["id"]);
-        
-        if (!$site)
-        {
-            throw new HttpNotFoundException($request);
-        }
-
-        $from = $this->getFromTime($request);
-
-        return $this->json($response, $this->visits->getPages($from, $site->id));
-    }
-
-    private function getFromTime(Request $request)
-    {
-        $params = $request->getQueryParams();
-
-        if (!isset($params["from"]) || intval($params["from"]) == 0)
-        {
-            // default to last 7 days
-            return time() - 604800;
-        }
-
-        return intval($params["from"]);
-    }
 }
