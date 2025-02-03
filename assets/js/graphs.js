@@ -1,7 +1,8 @@
 import { Chart, BarController, PieController, BarElement, ArcElement, CategoryScale, LinearScale, Colors, Tooltip, Legend } from "chart.js"
+import { ChoroplethController, ProjectionScale, ColorScale, GeoFeature } from 'chartjs-chart-geo';
 
 // Bundle optimization
-Chart.register(BarController, PieController, BarElement, ArcElement, CategoryScale, LinearScale, Colors, Tooltip, Legend)
+Chart.register(BarController, PieController, ChoroplethController, BarElement, ArcElement, CategoryScale, LinearScale, ProjectionScale, ColorScale, GeoFeature, Colors, Tooltip, Legend)
 
 // Current charts
 let charts = []
@@ -22,9 +23,9 @@ async function displayData(site, time) {
     const browsers = await fetch(`/api/sites/${site}/browsers?from=${from}`).then(x => x.json())
     const systems = await fetch(`/api/sites/${site}/operating-systems?from=${from}`).then(x => x.json())
     const devices = await fetch(`/api/sites/${site}/device-types?from=${from}`).then(x => x.json())
+    const countries = await fetch(`/api/sites/${site}/countries?from=${from}`).then(x => x.json())
 
-    console.log(systems);
-    console.log(devices);
+    console.log(countries);
 
     // Display the charts
     charts.push(displayLineChart("pages", pages.map(x => [x.path, x.count])))
@@ -32,6 +33,7 @@ async function displayData(site, time) {
     charts.push(displayPieChart("browsers", browsers.map(x => [x.browser, x.count])))
     charts.push(displayPieChart("systems", systems.map(x => [x.operating_system, x.count])))
     charts.push(displayPieChart("devices", devices.map(x => [x.device_type, x.count])))
+    charts.push(displayCountryChart("countries", countries.map(x => [x.country, x.count])))
 }
 
 function displayChartInternal(type, options, id, values) {
@@ -54,6 +56,21 @@ function displayChartInternal(type, options, id, values) {
     })
 
     return chart
+}
+
+function displayCountryChart(id, values) {
+    const chart = new Chart(document.getElementById(id).getContext("2d"), {
+        type: 'choropleth',
+        data: {
+            labels: values.map(x => x[0]),
+            datasets: [{
+                label: 'Visits',
+                data: values.map(x => x[1]),
+            }]
+        },
+        options: {}
+    });
+    return chart;
 }
 
 function displayLineChart(id, values) {
