@@ -19,6 +19,13 @@ async function displayData(site, time) {
     const pages = await fetch(`/api/sites/${site}/pages?from=${from}`).then(x => x.json())
     const referrers = await fetch(`/api/sites/${site}/referrers?from=${from}`).then(x => x.json())
 
+    const pageCount = pages.map(x => x.count).reduce((a, b) => a + b, 0)
+    const referrerCount = referrers.map(x => x.count).reduce((a, b) => a + b, 0)
+    if (pageCount > referrerCount) {
+        referrers.push({ referrer: "direct / unknown", count:  pageCount - referrerCount })
+        referrers.sort((a, b) => { return b.count - a.count })
+    }
+
     // Display the charts
     pagesChart = displayLineChart("pages", pages.map(x => [x.path, x.count]))
     referrersChart = displayLineChart("referrers", referrers.map(x => [x.referrer, x.count]))
