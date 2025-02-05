@@ -1,7 +1,8 @@
 import { Chart, BarController, PieController, BarElement, ArcElement, CategoryScale, LinearScale, Colors, Tooltip, Legend } from "chart.js"
-import { ChoroplethController, ProjectionScale, ColorScale, GeoFeature } from 'chartjs-chart-geo';
+import { ChoroplethController, ProjectionScale, ColorScale, GeoFeature, topojson } from 'chartjs-chart-geo';
 
 // Bundle optimization
+
 Chart.register(BarController, PieController, ChoroplethController, BarElement, ArcElement, CategoryScale, LinearScale, ProjectionScale, ColorScale, GeoFeature, Colors, Tooltip, Legend)
 
 // Current charts
@@ -25,15 +26,14 @@ async function displayData(site, time) {
     const devices = await fetch(`/api/sites/${site}/device-types?from=${from}`).then(x => x.json())
     const countries = await fetch(`/api/sites/${site}/countries?from=${from}`).then(x => x.json())
 
-    console.log(countries);
-
     // Display the charts
+    const region = new Intl.DisplayNames(['en'], { type: 'region' })
     charts.push(displayLineChart("pages", pages.map(x => [x.path, x.count])))
     charts.push(displayLineChart("referrers", referrers.map(x => [x.referrer, x.count])))
     charts.push(displayPieChart("browsers", browsers.map(x => [x.browser, x.count])))
     charts.push(displayPieChart("systems", systems.map(x => [x.operating_system, x.count])))
     charts.push(displayPieChart("devices", devices.map(x => [x.device_type, x.count])))
-    charts.push(displayCountryChart("countries", countries.map(x => [x.country, x.count])))
+    displayCountryChart("countries", Object.fromEntries(countries.map(x => [ region.of(x.country), x.count ])), charts)
 }
 
 function displayChartInternal(type, options, id, values) {
@@ -58,19 +58,35 @@ function displayChartInternal(type, options, id, values) {
     return chart
 }
 
-function displayCountryChart(id, values) {
-    const chart = new Chart(document.getElementById(id).getContext("2d"), {
-        type: 'choropleth',
-        data: {
-            labels: values.map(x => x[0]),
-            datasets: [{
-                label: 'Visits',
-                data: values.map(x => x[1]),
-            }]
-        },
-        options: {}
+function displayCountryChart(id, values, charts) {
+
+    fetch('https://unpkg.com/world-atlas/countries-50m.json').then((r) => r.json()).then((data) => {
+        const countries = topojson.feature(data, data.objects.countries).features;
+
+        const chart = new Chart(document.getElementById(id).getContext("2d"), {
+            type: 'choropleth',
+            data: {
+                labels: countries.map((d) => d.properties.name),
+                datasets: [{
+                label: 'Countries',
+                data: countries.map((d) => {
+                        const country = d.properties.name;
+                        return ({feature: d, value: values[country] ? values[country] : 0})
+                    }),
+                }]
+            },
+            options: {
+                scales: {
+                    projection: {
+                        axis: 'x',
+                        projection: 'equalEarth'
+                    }
+                }
+            }
+        });
+
+        charts.push(chart);
     });
-    return chart;
 }
 
 function displayLineChart(id, values) {
