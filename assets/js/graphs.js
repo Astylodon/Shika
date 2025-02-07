@@ -1,5 +1,6 @@
 import { Chart, BarController, PieController, BarElement, ArcElement, CategoryScale, LinearScale, Colors, Tooltip, Legend } from "chart.js"
 import { ChoroplethController, ProjectionScale, ColorScale, GeoFeature, topojson } from 'chartjs-chart-geo';
+import countries50m from "../../node_modules/world-atlas/countries-50m.json" with { type: "json" };
 
 // Bundle optimization
 Chart.register(BarController, PieController, ChoroplethController, BarElement, ArcElement, CategoryScale, LinearScale, ProjectionScale, ColorScale, GeoFeature, Colors, Tooltip, Legend)
@@ -32,7 +33,7 @@ async function displayData(site, time) {
     charts.push(displayPieChart("browsers", browsers.map(x => [x.browser, x.count])))
     charts.push(displayPieChart("systems", systems.map(x => [x.operating_system, x.count])))
     charts.push(displayPieChart("devices", devices.map(x => [x.device_type, x.count])))
-    displayCountryChart("countries", Object.fromEntries(countries.map(x => [ region.of(x.country), x.count ])), charts)
+    charts.push(displayCountryChart("countries", Object.fromEntries(countries.map(x => [ region.of(x.country), x.count ]))));
 }
 
 function displayChartInternal(type, options, id, values) {
@@ -57,35 +58,32 @@ function displayChartInternal(type, options, id, values) {
     return chart
 }
 
-function displayCountryChart(id, values, charts) {
+function displayCountryChart(id, values) {
+    const countries = topojson.feature(countries50m, countries50m.objects.countries).features;
 
-    fetch('https://unpkg.com/world-atlas/countries-50m.json').then((r) => r.json()).then((data) => {
-        const countries = topojson.feature(data, data.objects.countries).features;
-
-        const chart = new Chart(document.getElementById(id).getContext("2d"), {
-            type: 'choropleth',
-            data: {
-                labels: countries.map((d) => d.properties.name),
-                datasets: [{
-                label: 'Countries',
-                data: countries.map((d) => {
-                        const country = d.properties.name;
-                        return ({feature: d, value: values[country] ? values[country] : 0})
-                    }),
-                }]
-            },
-            options: {
-                scales: {
-                    projection: {
-                        axis: 'x',
-                        projection: 'equalEarth'
-                    }
+    const chart = new Chart(document.getElementById(id).getContext("2d"), {
+        type: 'choropleth',
+        data: {
+            labels: countries.map((d) => d.properties.name),
+            datasets: [{
+            label: 'Countries',
+            data: countries.map((d) => {
+                    const country = d.properties.name;
+                    return ({feature: d, value: values[country] ? values[country] : 0})
+                }),
+            }]
+        },
+        options: {
+            scales: {
+                projection: {
+                    axis: 'x',
+                    projection: 'equalEarth'
                 }
             }
-        });
-
-        charts.push(chart);
+        }
     });
+
+    return chart;
 }
 
 function displayLineChart(id, values) {
