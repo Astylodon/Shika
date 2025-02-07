@@ -26,6 +26,13 @@ async function displayData(site, time) {
     const devices = await fetch(`/api/sites/${site}/device-types?from=${from}`).then(x => x.json())
     const countries = await fetch(`/api/sites/${site}/countries?from=${from}`).then(x => x.json())
 
+    const pageCount = pages.map(x => x.count).reduce((a, b) => a + b, 0)
+    const referrerCount = referrers.map(x => x.count).reduce((a, b) => a + b, 0)
+    if (pageCount > referrerCount) {
+        referrers.push({ referrer: "direct / unknown", count:  pageCount - referrerCount })
+        referrers.sort((a, b) => { return b.count - a.count })
+    }
+
     // Display the charts
     const region = new Intl.DisplayNames(['en'], { type: 'region' })
     charts.push(displayLineChart("pages", pages.map(x => [x.path, x.count])))
