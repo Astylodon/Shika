@@ -2,7 +2,6 @@ import { Chart, BarController, PieController, BarElement, ArcElement, CategorySc
 import { ChoroplethController, ProjectionScale, ColorScale, GeoFeature, topojson } from 'chartjs-chart-geo';
 
 // Bundle optimization
-
 Chart.register(BarController, PieController, ChoroplethController, BarElement, ArcElement, CategoryScale, LinearScale, ProjectionScale, ColorScale, GeoFeature, Colors, Tooltip, Legend)
 
 // Current charts

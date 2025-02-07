@@ -2,7 +2,7 @@
   "name": "shika",
   "scripts": {
     "build": "vite build && npm run script",
-    "script": "esbuild scripts/src/shika.js --sourcemap --minify --format=iife --outfile=public/shika.js"
+    "script": "esbuild scripts/src/shika.js --minify --format=iife --outfile=public/shika.js"
   },
   "dependencies": {
     "bootstrap": "^5.3.2",
