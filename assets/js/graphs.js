@@ -1,6 +1,6 @@
 import { Chart, BarController, PieController, BarElement, ArcElement, CategoryScale, LinearScale, Colors, Tooltip, Legend } from "chart.js"
 import { ChoroplethController, ProjectionScale, ColorScale, GeoFeature, topojson } from 'chartjs-chart-geo';
-import countries50m from "../../node_modules/world-atlas/countries-50m.json" with { type: "json" };
+import countries50m from "world-atlas/countries-50m.json" with { type: "json" };
 
 // Bundle optimization
 Chart.register(BarController, PieController, ChoroplethController, BarElement, ArcElement, CategoryScale, LinearScale, ProjectionScale, ColorScale, GeoFeature, Colors, Tooltip, Legend)
