@@ -45,15 +45,15 @@ then
     echo -e "DB_DSN=mysql:host=localhost;dbname=$dataname\nDB_USERNAME=$username\nDB_PASSWORD=$password" > .env
 elif [ $database == "2" ]
 then
-    mkdir -p db
-    echo -e "DB_DSN=sqlite:$path/db/$dataname.sqlite\nDB_USERNAME=$username\nDB_PASSWORD=$password" > .env
-    if [ -f db/$dataname.sqlite ]; then
+    echo -e "DB_DSN=sqlite:$path/$dataname.sqlite\nDB_USERNAME=$username\nDB_PASSWORD=$password" > .env
+    if [ -f $dataname.sqlite ]; then
         echo "Database file already exists at $dataname.sqlite, if this is unexpected you might have to delete it manually and run this script again"
     else
-        touch db/$dataname.sqlite
+        touch $dataname.sqlite
     fi
-    echo "Needing sudo password to chown database files"
-    sudo chown -R www-data:www-data db
+    echo "Needing sudo password to give permission to database file"
+    sudo chmod 775 $dataname.sqlite
+    sudo chown www-data:www-data $dataname.sqlite
 fi
 
 # Run php script
