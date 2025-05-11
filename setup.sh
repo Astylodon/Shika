@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # User config
 read -p "Database name [shika]: " dataname
@@ -35,15 +36,26 @@ while true; do
     esac
 done
 
+# Create .env file
 path=$(dirname $(realpath $0))
 echo ""
+echo "Creating environment at $path"
 if [ $database == "1" ]
 then
     echo -e "DB_DSN=mysql:host=localhost;dbname=$dataname\nDB_USERNAME=$username\nDB_PASSWORD=$password" > .env
-elif [ $database == "1" ]
+elif [ $database == "2" ]
 then
     echo -e "DB_DSN=sqlite:$path/$dataname.sqlite\nDB_USERNAME=$username\nDB_PASSWORD=$password" > .env
+    touch $dataname.sqlite
+    echo "Needing sudo password to chown database file"
+    sudo chown www-data:www-data $dataname.sqlite
 fi
-echo ".env config created at $path/.env"
 
+# Run php script
+echo ""
+echo "Running migration script"
 php bin/migrate
+
+echo ""
+echo "Creating admin user"
+php bin/adduser
