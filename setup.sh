@@ -42,17 +42,6 @@ then
         mkdir -p data
         touch data/database.sqlite
     fi
-    echo "Needing sudo password to give permission to database file"
-
-    read -p "Webserver user [www-data]: " webuser
-    if [ -z $webuser ]
-    then
-        webuser=www-data
-    fi
-
-    sudo chmod 775 data/database.sqlite
-    sudo chown $webuser:$webuser data
-    sudo chown $webuser:$webuser data/database.sqlite
 fi
 
 # Run php script
@@ -63,3 +52,15 @@ php bin/migrate
 echo ""
 echo "Creating admin user, please fill the following data with the administrator credentials"
 php bin/adduser
+
+echo "Needing sudo password to give permission to database file"
+
+read -p "Webserver user [www-data]: " webuser
+if [ -z $webuser ]
+then
+    webuser=www-data
+fi
+
+sudo chmod 775 data/database.sqlite
+sudo chown $webuser:$webuser data
+sudo chown $webuser:$webuser data/database.sqlite
