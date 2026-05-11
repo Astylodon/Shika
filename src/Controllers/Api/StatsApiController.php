@@ -35,7 +35,7 @@ class StatsApiController
         }
 
         $from = $this->getFromTime($request);
-        $referrers = $this->visits->groupBy("referrer_host", "referrer", $from, $site->id);
+        $referrers = $this->visits->groupBy("referrer_host", "referrer", $from, $site->id, false);
         
         return $this->json($response, $referrers);
     }
