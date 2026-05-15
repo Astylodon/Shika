@@ -26,6 +26,14 @@ async function displayData(site, time) {
     const devices = await fetch(`/api/sites/${site}/device-types?from=${from}`).then(x => x.json())
     const countries = await fetch(`/api/sites/${site}/countries?from=${from}`).then(x => x.json())
 
+    for (let r of referrers)
+    {
+        if (r.referrer === null)
+        {
+            r.referrer = "direct / unknown";
+        }
+    }
+
     // Display the charts
     const region = new Intl.DisplayNames(['en'], { type: 'region' })
     charts.push(displayLineChart("pages", pages.map(x => [x.path, x.count])))
