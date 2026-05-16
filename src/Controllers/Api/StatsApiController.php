@@ -41,7 +41,25 @@ class StatsApiController
     }
 
     /**
-     * Returns the top referrers on /sites/{id}/pages
+     * Returns the top hosts on /sites/{id}/hosts
+     */
+    public function hosts(Request $request, Response $response, array $args)
+    {
+        $site = $this->sites->findById($args["id"]);
+        
+        if (!$site)
+        {
+            throw new HttpNotFoundException($request);
+        }
+
+        $from = $this->getFromTime($request);
+        $pages = $this->visits->groupBy("visit_host", "host", $from, $site->id);
+
+        return $this->json($response, $pages);
+    }
+
+    /**
+     * Returns the top pages on /sites/{id}/pages
      */
     public function pages(Request $request, Response $response, array $args)
     {
@@ -95,7 +113,7 @@ class StatsApiController
     }
 
     /**
-     * Returns the top referrers on /sites/{id}/device-types
+     * Returns the top device types on /sites/{id}/device-types
      */
     public function devices(Request $request, Response $response, array $args)
     {
@@ -113,7 +131,7 @@ class StatsApiController
     }
 
     /**
-     * Returns the top referrers on /sites/{id}/countries
+     * Returns the top countries on /sites/{id}/countries
      */
     public function countries(Request $request, Response $response, array $args)
     {
