@@ -7,15 +7,18 @@ namespace Shika\Helpers;
  */
 class Vite
 {
-    private string $manifestPath;
     private string $basePath;
-    private ?array $manifest;
+    private string $manifestPath;
 
-    public function __construct()
+    private ?array $manifest;
+    private ?string $viteHost;
+
+    public function __construct(string|null $viteHost)
     {
         $this->basePath = "build";
         $this->manifestPath = $this->basePath . "/manifest.json";
         $this->manifest = null;
+        $this->viteHost = $viteHost;
     }
 
     /**
@@ -24,8 +27,14 @@ class Vite
      * @param string $name The file path
      * @return string The built file path
      */
-    public function getFile(string $name)
+    public function getFile(string $name): string
     {
+        // When running in hot mode use the Vite development server host
+        if ($this->isHot())
+        {
+            return $this->viteHost . "/" . $name;
+        }
+
         $manifest = $this->getManifest();
 
         // Check if an entry exist
@@ -34,7 +43,17 @@ class Vite
             throw new \Exception("No entry for $name in Vite manifest");
         }
 
-        return $this->basePath . "/" . $manifest[$name]["file"];
+        // Leading slash for routes not at root
+        return "/" . $this->basePath . "/" . $manifest[$name]["file"];
+    }
+
+    /**
+     * Gets whether the server is running in hot mode
+     * @return bool Whether running in hot mode
+     */
+    public function isHot(): bool
+    {
+        return $this->viteHost !== null;
     }
 
     private function getManifest(): mixed

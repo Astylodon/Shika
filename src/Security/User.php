@@ -52,16 +52,4 @@ class User
     {
         return $user->role >= $role->value;
     }
-
-    // Used for Twig
-
-    public static function isManager(mixed $user)
-    {
-        return self::userHasRole($user, Role::Manager);
-    }
-
-    public static function isAdmin(mixed $user)
-    {
-        return self::userHasRole($user, Role::Admin);
-    }
 }

@@ -21,7 +21,7 @@ class CsrfToken
      */
     public function generate()
     {
-        $token = base64_encode(random_bytes(32));
+        $token = bin2hex(random_bytes(32));
 
         $this->session->set("token", $token);
     }

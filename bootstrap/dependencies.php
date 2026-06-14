@@ -5,6 +5,7 @@ use Dotenv\Dotenv;
 use Shika\Database\Database;
 use Shika\Helpers\GeoLocation;
 use Shika\Helpers\Session;
+use Shika\Helpers\Vite;
 use Shika\Repositories\ApiKeyRepository;
 use Shika\Repositories\SiteRepository;
 use Shika\Repositories\UserRepository;
@@ -16,7 +17,7 @@ use function DI\env;
 
 return function (ContainerBuilder $container) {
     // Load a .env file
-    $dotenv = Dotenv::createImmutable(__DIR__ . "/../");
+    $dotenv = Dotenv::createImmutable(__DIR__ . "/../", [".env", ".env.hot"], false);
     $dotenv->safeLoad();
 
     // Add all services to the container
@@ -32,6 +33,7 @@ return function (ContainerBuilder $container) {
 
             Twig::class => autowire(Twig::class),
             Session::class => autowire(Session::class),
+            Vite::class => autowire(Vite::class)->constructor(env("VITE_HOST", null)),
 
             GeoLocation::class => autowire(GeoLocation::class)->constructor(env("MAXMIND_PATH", "")),
         ]

@@ -16,11 +16,11 @@ $container = $containerBuilder->build();
 AppFactory::setContainer($container);
 $app = AppFactory::create();
 
-$routes = require __DIR__ . "/../routes/routes.php";
-$routes($app);
-
 $api = require __DIR__ . "/../routes/api.php";
 $api($app);
+
+$routes = require __DIR__ . "/../routes/routes.php";
+$routes($app);
 
 $app->add(ErrorMiddleware::class);
 

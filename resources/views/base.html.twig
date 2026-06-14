@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Shika</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div id="root"></div>
+
+        {% if vite_is_hot() %}
+            <script type="module">
+                import RefreshRuntime from "{{ "@react-refresh" | vite }}"
+                RefreshRuntime.injectIntoGlobalHook(window)
+                window.$RefreshReg$ = () => {}
+                window.$RefreshSig$ = () => (type) => type
+                window.__vite_plugin_react_preamble_installed__ = true
+            </script>
+            <script type="module" src="{{ "@vite/client" | vite }}"></script>
+        {% endif %}
+        <script type="module" src="{{ "resources/js/main.tsx" | vite }}"></script>
+    </body>
+</html>

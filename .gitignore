@@ -6,3 +6,4 @@ public/shika.js
 public/shika.js.map
 public/build
 .env
+.env.hot
